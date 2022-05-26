@@ -10,7 +10,12 @@ export const ProductForm = (props) =>{
   const [price, setPrice] = useState(props?.productData?.stockConferences[0]?.price);
   const [quantity, setQuantity] = useState(props?.productData?.stockConferences[0]?.quantity);
   
-  const moment = require('moment');
+
+  const handleInputNumber = (value, callback) => {
+    if(value >= 0){
+      callback(value)
+    }
+  }
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -55,18 +60,18 @@ export const ProductForm = (props) =>{
             />
           </Tooltip>
         </Grid>
-        { (props.buttonName != 'Cadastrar') &&
+        { (props.buttonName !== 'Cadastrar') &&
           <Grid item xs={4}>
             <TextField
               required={props.required}
               fullWidth
               size="small"
-              id="productId"
-              name="productId"
+              id="id"
+              name="id"
               label="Código"
               disabled={props?.disabledId}
               value={id}
-              onChange={(e)=>setId(e.target.value)}
+              onChange={(e)=>handleInputNumber(e.target.value, setId)}
               InputLabelProps={{ shrink: true }}
               placeholder="Código"
             />
@@ -75,31 +80,31 @@ export const ProductForm = (props) =>{
         {
           (props?.productData || props.isRegister) &&
           <>
-            <Grid item xs={(props.buttonName == 'Cadastrar') ? 6 : 4}>
+            <Grid item xs={(props.buttonName === 'Cadastrar') ? 6 : 4}>
               <TextField
                 required={props.required}
                 fullWidth
-                id="productPrice"
+                id="price"
                 type="number"
                 size="small"
-                name="productPrice"
+                name="price"
                 label="Preço"
                 InputLabelProps={{ shrink: true }}
                 placeholder="Preço"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)} />
-            </Grid><Grid item xs={(props.buttonName == 'Cadastrar') ? 6 : 4}>
+                onChange={(e)=>handleInputNumber(e.target.value, setPrice)} />
+            </Grid><Grid item xs={(props.buttonName === 'Cadastrar') ? 6 : 4}>
               <TextField
                 required={props.required}
                 fullWidth
                 size="small"
-                name="productStock"
-                id="productStock"
+                name="quantity"
+                id="quantity"
                 label="Quantidade"
                 type="number"
                 InputLabelProps={{ shrink: true }}
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)} />
+                onChange={(e)=>handleInputNumber(e.target.value, setQuantity)} />
             </Grid>
           </>
           

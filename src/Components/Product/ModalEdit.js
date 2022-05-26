@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import { Close as CloseIcon } from '@mui/icons-material';
 import { api } from "../../Services/Api";
 
 import { useDispatch } from 'react-redux';
-import { addProduct, loadProduct, onErrorRequest, updateProduct } from '../../Store/Modules/Product/actions';
+import { addProduct, onErrorRequest, updateProduct } from '../../Store/Modules/Product/actions';
 import { ModalLoadingContext } from '../../Contexts/ModalLoading';
 import { ProductForm } from './ProductForm';
 
@@ -23,7 +23,7 @@ export const ModalEdit = (props) => {
   const dispatch = useDispatch();
   const { handleModalLoading } = useContext(ModalLoadingContext);
 
-  const { productData, onClose, isOpen, isRegister } = props;
+  const { productData, onClose, isOpen } = props;
 
   const handleSubmit = async (product) => {
     if (productData === null) {
