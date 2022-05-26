@@ -19,13 +19,19 @@ export const ProductForm = (props) =>{
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    const product = {
+    let product = {
       id,
-      name,
-      stockConference: {
-        price,
-        quantity
+      name
+    }
+    if(props.buttonName === 'BUSCAR'){
+      product = {
+        ...product,
+        stockConference: {
+          price,
+          quantity
+        }
       }
+      
     }
     if(product.name?.length >= 3 || product.id !== null){
       props.submitForm(product);

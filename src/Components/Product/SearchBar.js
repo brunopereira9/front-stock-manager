@@ -12,15 +12,24 @@ export const SearchBar = () => {
   const dispatch = useDispatch();
   const { handleModalLoading } = useContext(ModalLoadingContext);
 
-  const handleSubmit = async (product) => {
-    handleModalLoading(true, "Aguarde enquanto buscamos os dados informados.");
-    await api.post("search/Product", product)
+  const fetchData = async (route, data) => {
+    await api.get(`Product/${route}/${data}`)
       .then(function (response) {
-        dispatch(loadProduct(response.data));
+        console.log(response.data)
+        dispatch(loadProduct([response.data]));
       })
       .catch(function (error) {
         dispatch(onErrorRequest(error));
       });
+  }
+
+  const handleSubmit = (product) => {
+    handleModalLoading(true, "Aguarde enquanto buscamos os dados informados.");
+    if(product?.id > 0){
+      fetchData('id', product.id);
+    }else if(product?.name.length() > 0){
+      fetchData('name', product.name);
+    }    
     handleModalLoading(false);
   };
   return (
@@ -33,7 +42,7 @@ export const SearchBar = () => {
             marginTop: 4,
           }}
         >
-          <ProductForm submitForm={handleSubmit} required={false} buttonName={"Buscar"} isRegister={false}/>
+          <ProductForm submitForm={handleSubmit} required={false} buttonName={"BUSCAR"} isRegister={false}/>
         </Paper>
       </Container>
     </>
