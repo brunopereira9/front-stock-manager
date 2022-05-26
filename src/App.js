@@ -5,6 +5,9 @@ import { ToastContainer } from 'react-toastify';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ptBR } from '@mui/material/locale';
 import { amber, blue, grey, red } from '@mui/material/colors';
+import { ModalLoadingProvider } from './Contexts/ModalLoading';
+import { Provider } from 'react-redux';
+import { store } from './Store';
 
 const theme = createTheme(
   {
@@ -25,12 +28,16 @@ const theme = createTheme(
 export default function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <ToastContainer autoClose={8000} style={{ width: "20em" }} />
-          <Routes />
-        </BrowserRouter>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <ModalLoadingProvider>
+            <BrowserRouter>
+              <ToastContainer autoClose={8000} style={{ width: "20em" }} />
+              <Routes />
+            </BrowserRouter>
+          </ModalLoadingProvider>
+        </ThemeProvider>
+      </Provider>
     </>
   );
 }
